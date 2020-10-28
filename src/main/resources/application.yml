@@ -1,0 +1,25 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.101.142.65:3306/minischool?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 1299
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:SS
+  servlet:
+    multipart:
+      max-file-size: 10240000
+  redis:
+    host: 47.101.142.65
+    port: 6379
+    password: 1299
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+  type-aliases-package: com.s1mple.minischoolsys.domain
+  mapper-locations: classpath:/mapper/**.xml
+logging:
+  level:
+    com.s1mple.minischoolsys.dao: trace

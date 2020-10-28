@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.s1mple.minischoolsys.dao.AuthorityMapper">
+
+
+    <select id="selectAuthorityByRid" resultType="com.s1mple.minischoolsys.domain.Authority" >
+        select a.authority_id,a.`name`,a.description
+        from authority a,role_authority ra
+        where a.authority_id = ra.authority_id
+        <if test="roles != null and roles.size() > 0">
+            and
+            <foreach collection="roles" item="item" open="ra.role_id in(" separator="," close=")">
+                #{item.role_id}
+            </foreach>
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.s1mple.minischoolsys.dao.RoleMapper">
+
+
+    <select id="selectRoleByAid" resultType="com.s1mple.minischoolsys.domain.Role">
+        select r.role_id,r.`name`,r.description
+        from admin_role ar,role r
+        where ar.role_id = r.role_id and admin_id = #{admin_id}
+    </select>
+</mapper>
