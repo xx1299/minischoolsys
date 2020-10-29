@@ -5,6 +5,7 @@ import com.s1mple.minischoolsys.dao.AdminMapper;
 import com.s1mple.minischoolsys.domain.Admin;
 import com.s1mple.minischoolsys.service.ShiroService;
 import com.s1mple.minischoolsys.utils.JwtUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -23,9 +24,6 @@ public class ShiroServiceImpl implements ShiroService {
 
     @Autowired
     RedisTemplate redisTemplate;
-//    @Resource(name="redisTemplate")
-//    ValueOperations valueOperations;
-
 
     @Override
     public Admin getAdminByUsername(String username) {
@@ -35,8 +33,14 @@ public class ShiroServiceImpl implements ShiroService {
     @Override
     public String createToken(Admin admin) {
         String token = JwtUtils.createToken(admin);
-        ValueOperations<String,String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(admin.getUsername(),token);
+        redisTemplate.opsForValue().set(admin.getAdmin_id().toString(),token);
         return token;
+    }
+
+    @Override
+    public void logout() {
+        Admin currentAdmin = (Admin)SecurityUtils.getSubject().getPrincipal();
+        System.out.println(currentAdmin.getAdmin_id());
+        redisTemplate.delete(currentAdmin.getAdmin_id().toString());
     }
 }

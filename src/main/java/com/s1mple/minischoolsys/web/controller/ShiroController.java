@@ -6,6 +6,7 @@ import com.s1mple.minischoolsys.exception.ExceptionType;
 import com.s1mple.minischoolsys.service.ShiroService;
 import com.s1mple.minischoolsys.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,5 +27,12 @@ public class ShiroController {
         String token = shiroService.createToken(getAdmin);
         return token;
     }
+
+    @DeleteMapping("/logout")
+    public void logout(){
+        shiroService.logout();
+    }
+
+
 
 }

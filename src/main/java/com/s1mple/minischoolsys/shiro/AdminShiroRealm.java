@@ -74,7 +74,7 @@ public class AdminShiroRealm extends AuthorizingRealm {
         if (null == currentAdmin){
             throw new CustomException(ExceptionType.User_INPUT_ERROR,"账户不存在");
         }
-        String saveToken = (String) redisTemplate.opsForValue().get(currentAdmin.getUsername());
+        String saveToken = (String) redisTemplate.opsForValue().get(currentAdmin.getAdmin_id().toString());
         if (null == saveToken || !JwtUtils.verifyToken(token)){
             throw new CustomException(ExceptionType.User_INPUT_ERROR,"token失效，请重新登录");
         }

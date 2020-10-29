@@ -21,4 +21,6 @@ public class Admin {
 
     private String avatar;
 
+    private Integer status;
+
 }

@@ -6,4 +6,7 @@ public interface ShiroService {
     Admin getAdminByUsername(String username);
 
     String createToken(Admin admin);
+
+    void logout();
+
 }

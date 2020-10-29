@@ -20,12 +20,21 @@ public class JwtUtils {
     private static final String adminId = "adminId";
 
 
-
+    /**
+     * 获取请求头中的token值
+     * @param request
+     * @return token值
+     */
     public static String createToken(HttpServletRequest request){
         String auth = request.getHeader("auth");
         return auth;
     }
 
+    /**
+     * 创建token值
+     * @param admin 管理者对象
+     * @return token值
+     */
     public static String createToken(Admin admin){
         System.out.println(admin);
         long now=System.currentTimeMillis();
@@ -43,6 +52,11 @@ public class JwtUtils {
         return token;
     }
 
+    /**
+     * 解析token
+     * @param token token值
+     * @return 解析后的对象，可以获取token中的各种信息
+     */
     public static DecodedJWT getClaims(String token){
         DecodedJWT decode = JWT.decode(token);
         return decode;
@@ -50,7 +64,7 @@ public class JwtUtils {
 
     /**
      * 验证token
-     * @param token 凭证
+     * @param token token值
      * @return token是否过期 false为过期，true为未过期
      */
     public static boolean verifyToken(String token){
