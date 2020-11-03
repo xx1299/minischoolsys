@@ -23,7 +23,6 @@ public class ShiroController {
         if (null == getAdmin || !getAdmin.getPassword().equals(admin.getPassword())){
             throw new CustomException(ExceptionType.User_INPUT_ERROR,"帐号或密码输入错误");
         }
-        System.out.println(getAdmin);
         String token = shiroService.createToken(getAdmin);
         return token;
     }

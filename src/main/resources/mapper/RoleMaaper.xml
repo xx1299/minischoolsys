@@ -10,4 +10,5 @@
         from admin_role ar,role r
         where ar.role_id = r.role_id and admin_id = #{admin_id}
     </select>
+
 </mapper>

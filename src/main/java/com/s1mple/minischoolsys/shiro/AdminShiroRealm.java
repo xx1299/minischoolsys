@@ -8,6 +8,7 @@ import com.s1mple.minischoolsys.dao.RoleMapper;
 import com.s1mple.minischoolsys.domain.Admin;
 import com.s1mple.minischoolsys.domain.Authority;
 import com.s1mple.minischoolsys.domain.Role;
+import com.s1mple.minischoolsys.domain.vo.AdminVo;
 import com.s1mple.minischoolsys.exception.CustomException;
 import com.s1mple.minischoolsys.exception.ExceptionType;
 import com.s1mple.minischoolsys.utils.JwtUtils;
@@ -49,7 +50,6 @@ public class AdminShiroRealm extends AuthorizingRealm {
 //    用户授权添加
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        System.out.println(principalCollection.getPrimaryPrincipal());
         Admin admin = (Admin)principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         List<Role> roles = roleMapper.selectRoleByAid(admin.getAdmin_id());

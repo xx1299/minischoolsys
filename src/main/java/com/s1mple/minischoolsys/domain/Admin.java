@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -21,6 +23,10 @@ public class Admin {
 
     private String avatar;
 
-    private Integer status;
+    private Boolean status;
+
+    private Date create_time;
+
+    private Date last_login_time;
 
 }

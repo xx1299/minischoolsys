@@ -19,4 +19,8 @@ public class Authority {
 
     private String description;
 
+    private Boolean status;
+
+    private Integer type;
+
 }

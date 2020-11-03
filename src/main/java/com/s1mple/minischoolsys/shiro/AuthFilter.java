@@ -2,6 +2,7 @@ package com.s1mple.minischoolsys.shiro;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.s1mple.minischoolsys.domain.AjxsResponse;
 import com.s1mple.minischoolsys.exception.CustomException;
 import com.s1mple.minischoolsys.exception.ExceptionType;
 import com.s1mple.minischoolsys.utils.HttpContextUtil;
@@ -69,10 +70,8 @@ public class AuthFilter extends AuthenticatingFilter {
         try {
             //处理登录失败的异常
             Throwable throwable = e.getCause() == null ? e : e.getCause();
-            Map<String, Object> result = new HashMap<>();
             e.printStackTrace();
-            result.put("status", 400);
-            result.put("msg", "登录凭证已失效，请重新登录");
+            AjxsResponse result = AjxsResponse.error(new CustomException(ExceptionType.User_INPUT_ERROR, "凭证失效"));
             String json = MAPPER.writeValueAsString(result);
             httpResponse.getWriter().print(json);
         } catch (IOException exception) {

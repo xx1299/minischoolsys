@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.s1mple.minischoolsys.dao.AdminMapper">
+
+    <select id="selectAdminVoByAid">
+        select a.admin_id,username,passwrod,avatar,status,create_time,last_login_time,ar.role_id
+        from admin a,admin_role ar
+        where a.admin_id = ar.admin_id and admin_id = #{admin_id}
+    </select>
+</mapper>

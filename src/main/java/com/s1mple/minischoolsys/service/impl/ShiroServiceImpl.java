@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,6 +35,8 @@ public class ShiroServiceImpl implements ShiroService {
     public String createToken(Admin admin) {
         String token = JwtUtils.createToken(admin);
         redisTemplate.opsForValue().set(admin.getAdmin_id().toString(),token);
+        admin.setLast_login_time(new Date());
+        adminMapper.updateById(admin);
         return token;
     }
 
