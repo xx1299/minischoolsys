@@ -23,4 +23,6 @@ public class Authority {
 
     private Integer type;
 
+    private String path;
+
 }

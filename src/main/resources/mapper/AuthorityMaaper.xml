@@ -5,7 +5,7 @@
 <mapper namespace="com.s1mple.minischoolsys.dao.AuthorityMapper">
 
 
-    <select id="selectAuthorityByRid" resultType="com.s1mple.minischoolsys.domain.Authority" >
+    <select id="selectAuthorityByRids" resultType="com.s1mple.minischoolsys.domain.Authority" >
         select a.authority_id,a.`name`,a.description
         from authority a,role_authority ra
         where a.authority_id = ra.authority_id
@@ -15,5 +15,10 @@
                 #{item.role_id}
             </foreach>
         </if>
+    </select>
+    <select id="selectAuthorityByRid" resultType="com.s1mple.minischoolsys.domain.Authority">
+         select a.authority_id,a.`name`,a.description
+        from authority a,role_authority ra
+        where a.authority_id = ra.authority_id and ra.role_id = #{role_id}
     </select>
 </mapper>

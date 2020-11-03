@@ -53,7 +53,7 @@ public class AdminShiroRealm extends AuthorizingRealm {
         Admin admin = (Admin)principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         List<Role> roles = roleMapper.selectRoleByAid(admin.getAdmin_id());
-        List<Authority> authorities = authorityMapper.selectAuthorityByRid(roles);
+        List<Authority> authorities = authorityMapper.selectAuthorityByRids(roles);
 //        添加角色
         for (Role role : roles) {
             simpleAuthorizationInfo.addRole(role.getName());

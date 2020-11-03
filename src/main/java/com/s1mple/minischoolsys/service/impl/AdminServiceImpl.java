@@ -4,14 +4,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.s1mple.minischoolsys.dao.AdminMapper;
+import com.s1mple.minischoolsys.dao.AuthorityMapper;
+import com.s1mple.minischoolsys.dao.RoleMapper;
 import com.s1mple.minischoolsys.domain.Admin;
+import com.s1mple.minischoolsys.domain.dto.AdminDto;
 import com.s1mple.minischoolsys.service.AdminService;
+import com.s1mple.minischoolsys.utils.DozerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -19,6 +24,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Autowired
     AdminMapper adminMapper;
+
+    @Autowired
+    RoleMapper roleMapper;
+
+    @Autowired
+    AuthorityMapper authorityMapper;
 
     @Override
     public boolean check(Admin admin) {
@@ -43,5 +54,17 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         admin.setPassword(DigestUtils.md5DigestAsHex(admin.getPassword().getBytes()));
         adminMapper.insert(admin);
         return admin;
+    }
+
+    @Override
+    public AdminDto getAdminDtoByAid(Long aid) {
+        Admin admin = adminMapper.selectById(aid);
+        return Optional.ofNullable(admin).map(it->{
+            AdminDto adminDto = DozerUtils.map(admin, AdminDto.class);
+            adminDto.setRoles(roleMapper.selectRoleByAid(aid));
+            adminDto.setAuthoritys(authorityMapper.selectAuthorityByRids(adminDto.getRoles()));
+            return adminDto;
+        }).get();
+
     }
 }

@@ -43,7 +43,6 @@ public class ShiroServiceImpl implements ShiroService {
     @Override
     public void logout() {
         Admin currentAdmin = (Admin)SecurityUtils.getSubject().getPrincipal();
-        System.out.println(currentAdmin.getAdmin_id());
         redisTemplate.delete(currentAdmin.getAdmin_id().toString());
     }
 }

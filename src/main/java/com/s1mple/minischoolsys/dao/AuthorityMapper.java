@@ -8,5 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface AuthorityMapper extends BaseMapper<Authority> {
-    List<Authority> selectAuthorityByRid(@Param("roles") List<Role> roles);
+    List<Authority> selectAuthorityByRids(@Param("roles") List<Role> roles);
+
+    List<Authority> selectAuthorityByRid(Long role_id);
 }

@@ -4,9 +4,21 @@
 
 <mapper namespace="com.s1mple.minischoolsys.dao.RoleMapper">
 
+    <resultMap id="roleVo" type="com.s1mple.minischoolsys.domain.vo.RoleVo">
+        <collection property="authorities" column="role_id" javaType="java.util.ArrayList"
+                    ofType="com.s1mple.minischoolsys.domain.Authority" select="com.s1mple.minischoolsys.dao.AuthorityMapper.selectAuthorityByRid">
+        </collection>
+    </resultMap>
+
+
 
     <select id="selectRoleByAid" resultType="com.s1mple.minischoolsys.domain.Role">
         select r.role_id,r.`name`,r.description
+        from admin_role ar,role r
+        where ar.role_id = r.role_id and admin_id = #{admin_id}
+    </select>
+    <select id="selectRoleVoByAid" resultMap="roleVo">
+        select r.role_id,`name`,description
         from admin_role ar,role r
         where ar.role_id = r.role_id and admin_id = #{admin_id}
     </select>

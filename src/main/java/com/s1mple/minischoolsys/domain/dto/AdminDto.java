@@ -1,4 +1,4 @@
-package com.s1mple.minischoolsys.domain.vo;
+package com.s1mple.minischoolsys.domain.dto;
 
 import com.s1mple.minischoolsys.domain.Authority;
 import com.s1mple.minischoolsys.domain.Role;
@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminVo {
+public class AdminDto {
 
     private Long admin_id;
 
@@ -23,8 +23,8 @@ public class AdminVo {
 
     private String avatar;
 
-    private List<RoleVo> roles;
+    private List<Role> roles;
 
-
+    private List<Authority> Authoritys;
 
 }
