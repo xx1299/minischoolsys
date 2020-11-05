@@ -16,11 +16,11 @@ public class MenuController {
     @Autowired
     MenuService menuService;
 
-    @GetMapping("/menus")
-    @RequiresPermissions("/menus")
-    public List<MenuVo> getMenuTree(){
-        return menuService.getMenuTree();
-    }
+//    @GetMapping("/menus")
+//    @RequiresPermissions("/menus")
+//    public List<MenuVo> getMenuTree(){
+//        return menuService.getMenuTree();
+//    }
 
     @GetMapping("/menus/{menu_id}")
     public Menu getMenu(@PathVariable("menu_id") Long menu_id){

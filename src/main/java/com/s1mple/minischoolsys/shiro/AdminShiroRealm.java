@@ -8,9 +8,12 @@ import com.s1mple.minischoolsys.dao.RoleMapper;
 import com.s1mple.minischoolsys.domain.Admin;
 import com.s1mple.minischoolsys.domain.Authority;
 import com.s1mple.minischoolsys.domain.Role;
+import com.s1mple.minischoolsys.domain.dto.AdminDto;
 import com.s1mple.minischoolsys.domain.vo.AdminVo;
+import com.s1mple.minischoolsys.domain.vo.RoleVo;
 import com.s1mple.minischoolsys.exception.CustomException;
 import com.s1mple.minischoolsys.exception.ExceptionType;
+import com.s1mple.minischoolsys.service.AdminService;
 import com.s1mple.minischoolsys.utils.JwtUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -40,6 +43,10 @@ public class AdminShiroRealm extends AuthorizingRealm {
 
     @Lazy
     @Autowired
+    AdminService adminService;
+
+    @Lazy
+    @Autowired
     RedisTemplate redisTemplate;
 
     @Override
@@ -50,17 +57,15 @@ public class AdminShiroRealm extends AuthorizingRealm {
 //    用户授权添加
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        Admin admin = (Admin)principalCollection.getPrimaryPrincipal();
+        AdminDto admin = (AdminDto)principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        List<Role> roles = roleMapper.selectRoleByAid(admin.getAdmin_id());
-        List<Authority> authorities = authorityMapper.selectAuthorityByRids(roles);
 //        添加角色
-        for (Role role : roles) {
+        for (Role role : admin.getRoles()) {
             simpleAuthorizationInfo.addRole(role.getName());
         }
 //        添加权限
-        for (Authority authority : authorities) {
-            simpleAuthorizationInfo.addStringPermission(authority.getName());
+        for (Authority authority : admin.getAuthoritys()) {
+            simpleAuthorizationInfo.addStringPermission(authority.getPath());
         }
         return simpleAuthorizationInfo;
     }
@@ -68,9 +73,10 @@ public class AdminShiroRealm extends AuthorizingRealm {
 //    用户登录验证
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        System.out.println("登录验证");
         String token = (String) authenticationToken.getPrincipal();
         Claim adminId = JwtUtils.getClaims(token).getClaim("adminId");
-        Admin currentAdmin = adminMapper.selectOne(Wrappers.<Admin>lambdaQuery().eq(Admin::getAdmin_id, adminId.asLong()));
+        AdminDto currentAdmin = adminService.getAdminDtoByAid(adminId.asLong());
         if (null == currentAdmin){
             throw new CustomException(ExceptionType.User_INPUT_ERROR,"账户不存在");
         }

@@ -4,9 +4,27 @@
 
 <mapper namespace="com.s1mple.minischoolsys.dao.AuthorityMapper">
 
+    <resultMap id="menuTreeMap" type="com.s1mple.minischoolsys.domain.vo.MenuVo">
+        <id column="authority_id" property="authority_id"/>
+        <result column="path" property="path"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="status" property="status"/>
+        <result column="type" property="type"/>
+        <collection property="children" select="selectChildrenByParentId" column="authority_id"
+                    javaType="java.util.ArrayList" ofType="com.s1mple.minischoolsys.domain.vo.MenuVo" >
+            <id column="authority_id" property="authority_id"/>
+            <result column="path" property="path"/>
+            <result column="name" property="name"/>
+            <result column="description" property="description"/>
+            <result column="status" property="status"/>
+            <result column="type" property="type"/>
+        </collection>
+    </resultMap>
+
 
     <select id="selectAuthorityByRids" resultType="com.s1mple.minischoolsys.domain.Authority" >
-        select a.authority_id,a.`name`,a.description
+        select a.authority_id,a.`name`,a.description,a.path,a.status,a.type
         from authority a,role_authority ra
         where a.authority_id = ra.authority_id
         <if test="roles != null and roles.size() > 0">
@@ -20,5 +38,15 @@
          select a.authority_id,a.`name`,a.description
         from authority a,role_authority ra
         where a.authority_id = ra.authority_id and ra.role_id = #{role_id}
+    </select>
+    <select id="selectMenuTree" resultMap="menuTreeMap">
+        select authority_id,`name`,path,`type`,status,parent_id
+        from authority
+        where `type` = 1
+    </select>
+    <select id="selectChildrenByParentId" resultType="com.s1mple.minischoolsys.domain.vo.MenuVo">
+        select authority_id,`name`,path,`type`,status,parent_id
+        from authority
+        where parent_id = #{authority_id}
     </select>
 </mapper>
