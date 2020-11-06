@@ -24,7 +24,7 @@
 
 
     <select id="selectAuthorityByRids" resultType="com.s1mple.minischoolsys.domain.Authority" >
-        select a.authority_id,a.`name`,a.description,a.path,a.status,a.type
+        select a.authority_id,a.`name`,a.description,a.path,a.`type`,a.status,a.parent_id
         from authority a,role_authority ra
         where a.authority_id = ra.authority_id
         <if test="roles != null and roles.size() > 0">
@@ -35,17 +35,17 @@
         </if>
     </select>
     <select id="selectAuthorityByRid" resultType="com.s1mple.minischoolsys.domain.Authority">
-         select a.authority_id,a.`name`,a.description
+         select a.authority_id,a.`name`,a.description,a.path,a.`type`,a.status,a.parent_id
         from authority a,role_authority ra
         where a.authority_id = ra.authority_id and ra.role_id = #{role_id}
     </select>
     <select id="selectMenuTree" resultMap="menuTreeMap">
-        select authority_id,`name`,path,`type`,status,parent_id
+        select authority_id,`name`,path,`type`,status,parent_id,description
         from authority
         where `type` = 1
     </select>
     <select id="selectChildrenByParentId" resultType="com.s1mple.minischoolsys.domain.vo.MenuVo">
-        select authority_id,`name`,path,`type`,status,parent_id
+        select authority_id,`name`,path,`type`,status,parent_id,description
         from authority
         where parent_id = #{authority_id}
     </select>

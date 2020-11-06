@@ -35,7 +35,6 @@ public class AuthorityServiceImpl extends ServiceImpl<AuthorityMapper, Authority
 
     @Override
     public List<MenuVo> getMenuTree() {
-
         return authorityMapper.selectMenuTree();
     }
 
