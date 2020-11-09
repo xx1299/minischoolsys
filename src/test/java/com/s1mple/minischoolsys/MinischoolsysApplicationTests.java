@@ -1,9 +1,7 @@
 package com.s1mple.minischoolsys;
 
 import com.s1mple.minischoolsys.dao.AdminMapper;
-import com.s1mple.minischoolsys.domain.dto.AdminDto;
-import com.s1mple.minischoolsys.domain.vo.AdminVo;
-import com.s1mple.minischoolsys.domain.vo.MenuVo;
+import com.s1mple.minischoolsys.domain.vo.AuthorityVo;
 import com.s1mple.minischoolsys.service.AdminService;
 import com.s1mple.minischoolsys.service.AuthorityService;
 import org.junit.jupiter.api.Test;
@@ -26,7 +24,7 @@ class MinischoolsysApplicationTests {
 
     @Test
     void contextLoads() {
-        List<MenuVo> menuTree = authorityService.getMenuTree();
+        List<AuthorityVo> menuTree = authorityService.getMenuTree();
         System.out.println(menuTree);
     }
 

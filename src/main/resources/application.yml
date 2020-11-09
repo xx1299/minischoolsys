@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.101.142.65/minischool?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost/minischool?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: 1299
   jackson:

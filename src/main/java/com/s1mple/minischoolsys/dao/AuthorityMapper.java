@@ -2,9 +2,8 @@ package com.s1mple.minischoolsys.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.s1mple.minischoolsys.domain.Authority;
-import com.s1mple.minischoolsys.domain.Menu;
 import com.s1mple.minischoolsys.domain.Role;
-import com.s1mple.minischoolsys.domain.vo.MenuVo;
+import com.s1mple.minischoolsys.domain.vo.AuthorityVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,7 +13,7 @@ public interface AuthorityMapper extends BaseMapper<Authority> {
 
     List<Authority> selectAuthorityByRid(Long role_id);
 
-    List<MenuVo> selectMenuTree();
+    List<AuthorityVo> selectMenuTree();
 
-    List<MenuVo> selectChildrenByParentId(Long authority_id);
+    List<AuthorityVo> selectChildrenByParentId(Long authority_id);
 }

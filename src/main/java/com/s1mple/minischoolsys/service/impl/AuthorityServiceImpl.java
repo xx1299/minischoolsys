@@ -4,10 +4,9 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.s1mple.minischoolsys.dao.AuthorityMapper;
 import com.s1mple.minischoolsys.dao.RoleMapper;
-import com.s1mple.minischoolsys.domain.Admin;
 import com.s1mple.minischoolsys.domain.Authority;
 import com.s1mple.minischoolsys.domain.dto.AdminDto;
-import com.s1mple.minischoolsys.domain.vo.MenuVo;
+import com.s1mple.minischoolsys.domain.vo.AuthorityVo;
 import com.s1mple.minischoolsys.service.AuthorityService;
 import com.s1mple.minischoolsys.utils.DozerUtils;
 import org.apache.shiro.SecurityUtils;
@@ -29,38 +28,46 @@ public class AuthorityServiceImpl extends ServiceImpl<AuthorityMapper, Authority
     RoleMapper roleMapper;
 
     @Override
-    public List<MenuVo> getPersonMenuTree() {
+    public List<AuthorityVo> getPersonMenuTree() {
         AdminDto admin = (AdminDto) SecurityUtils.getSubject().getPrincipal();
         return listConverMenuTree(admin.getAuthoritys());
     }
 
     @Override
-    public List<MenuVo> getMenuTree() {
+    public List<AuthorityVo> getMenuTree() {
         return authorityMapper.selectMenuTree();
     }
 
     @Override
     public void delMenu(Long authority_id) {
-        List<MenuVo> menuVos = authorityMapper.selectChildrenByParentId(authority_id);
-        if (!menuVos.isEmpty()){
-            menuVos.forEach(menuVo -> {
-                authorityMapper.delete(Wrappers.<Authority>lambdaQuery().eq(Authority::getParent_id,menuVo.getAuthority_id()));
-                authorityMapper.deleteById(menuVo.getAuthority_id());
+        List<AuthorityVo> authorityVos = authorityMapper.selectChildrenByParentId(authority_id);
+        if (!authorityVos.isEmpty()){
+            authorityVos.forEach(authorityVo -> {
+                authorityMapper.delete(Wrappers.<Authority>lambdaQuery().eq(Authority::getParent_id,authorityVo.getAuthority_id()));
+                authorityMapper.deleteById(authorityVo.getAuthority_id());
             });
         }
        authorityMapper.deleteById(authority_id);
     }
 
-    private List<MenuVo> listConverMenuTree(List<Authority> authorities){
-        List<MenuVo> menus = authorities.stream()
+    private List<AuthorityVo> listConverMenuTree(List<Authority> authorities){
+        List<AuthorityVo> authorityVos = authorities.stream()
                 .filter(authority -> authority.getType() == 1)
                 .map(authority -> {
-                    MenuVo menu = DozerUtils.map(authority, MenuVo.class);
-//                    menu.setChildren(DozerUtils.mapList(authorities.stream().filter(it->it.getParent_id().equals(authority.getAuthority_id())).collect(Collectors.toList()),MenuVo.class));
-                    menu.setChildren(authorityMapper.selectChildrenByParentId(authority.getAuthority_id()));
-                    return menu;
+                    AuthorityVo authorityVo = DozerUtils.map(authority, AuthorityVo.class);
+                    authorityVo.setChildren(authorityMapper.selectChildrenByParentId(authority.getAuthority_id()));
+                    return authorityVo;
                 }).collect(Collectors.toList());
-        return menus;
+        return authorityVos;
     }
 
+    private void recursionDelAuthority(Long authority_id){
+        List<AuthorityVo> authorityVos = authorityMapper.selectChildrenByParentId(authority_id);
+        if (!authorityVos.isEmpty()){
+            authorityVos.forEach(authorityVo -> {
+                recursionDelAuthority(authorityVo.getAuthority_id());
+            });
+        }
+        authorityMapper.deleteById(authority_id);
+    }
 }

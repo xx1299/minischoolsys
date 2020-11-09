@@ -1,6 +1,5 @@
 package com.s1mple.minischoolsys.domain.vo;
 
-import com.s1mple.minischoolsys.domain.Menu;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MenuVo {
+public class AuthorityVo {
 
     private Long authority_id;
 
@@ -28,6 +27,6 @@ public class MenuVo {
 
     private Long parent_id;
 
-    private List<MenuVo> children;
+    private List<AuthorityVo> children;
 
 }

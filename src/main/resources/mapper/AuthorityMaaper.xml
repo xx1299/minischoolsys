@@ -4,7 +4,7 @@
 
 <mapper namespace="com.s1mple.minischoolsys.dao.AuthorityMapper">
 
-    <resultMap id="menuTreeMap" type="com.s1mple.minischoolsys.domain.vo.MenuVo">
+    <resultMap id="menuTreeMap" type="com.s1mple.minischoolsys.domain.vo.AuthorityVo">
         <id column="authority_id" property="authority_id"/>
         <result column="path" property="path"/>
         <result column="name" property="name"/>
@@ -12,7 +12,7 @@
         <result column="status" property="status"/>
         <result column="type" property="type"/>
         <collection property="children" select="selectChildrenByParentId" column="authority_id"
-                    javaType="java.util.ArrayList" ofType="com.s1mple.minischoolsys.domain.vo.MenuVo" >
+                    javaType="java.util.ArrayList" ofType="com.s1mple.minischoolsys.domain.vo.AuthorityVo" >
             <id column="authority_id" property="authority_id"/>
             <result column="path" property="path"/>
             <result column="name" property="name"/>
@@ -44,7 +44,7 @@
         from authority
         where `type` = 1
     </select>
-    <select id="selectChildrenByParentId" resultType="com.s1mple.minischoolsys.domain.vo.MenuVo">
+    <select id="selectChildrenByParentId" resultType="com.s1mple.minischoolsys.domain.vo.AuthorityVo">
         select authority_id,`name`,path,`type`,status,parent_id,description
         from authority
         where parent_id = #{authority_id}
