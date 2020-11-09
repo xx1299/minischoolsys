@@ -9,6 +9,6 @@ import java.util.List;
 public interface RoleMapper extends BaseMapper<Role> {
     List<Role> selectRoleByAid(Long admin_id);
 
-    List<RoleVo> selectRoleVoByAid(Long admin_id);
+
 
 }

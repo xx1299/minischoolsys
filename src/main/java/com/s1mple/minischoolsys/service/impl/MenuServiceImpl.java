@@ -25,6 +25,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public List<MenuVo> getMenuTree() {
         Admin principal = (Admin) SecurityUtils.getSubject().getPrincipal();
+        System.out.println(principal);
         return menuMapper.selectMenuTree();
     }
 

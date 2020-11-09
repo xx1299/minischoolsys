@@ -3,15 +3,5 @@
 
 
 <mapper namespace="com.s1mple.minischoolsys.dao.AdminMapper">
-    <resultMap id="adminVo" type="com.s1mple.minischoolsys.domain.vo.AdminVo">
-        <collection property="roles" column="admin_id" javaType="java.util.ArrayList"
-                    ofType="com.s1mple.minischoolsys.domain.vo.RoleVo" select="com.s1mple.minischoolsys.dao.RoleMapper.selectRoleVoByAid">
-        </collection>
-    </resultMap>
 
-    <select id="selectAdminVoByAid" resultMap="adminVo">
-        select admin_id,username,password,avatar,status,create_time,last_login_time
-        from admin a
-        where admin_id = #{admin_id}
-    </select>
 </mapper>

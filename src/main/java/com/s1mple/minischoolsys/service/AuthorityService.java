@@ -10,4 +10,6 @@ public interface AuthorityService extends IService<Authority> {
     List<MenuVo> getPersonMenuTree();
 
     List<MenuVo> getMenuTree();
+
+    void delMenu(Long authority_id);
 }

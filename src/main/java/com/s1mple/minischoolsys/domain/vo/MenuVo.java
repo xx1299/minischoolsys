@@ -26,6 +26,8 @@ public class MenuVo {
     //    权限路径 对于菜单来说是path 对于功能来说则是该功能的接口地址
     private String path;
 
+    private Long parent_id;
+
     private List<MenuVo> children;
 
 }

@@ -6,6 +6,6 @@ import com.s1mple.minischoolsys.domain.vo.AdminVo;
 
 public interface AdminMapper extends BaseMapper<Admin> {
 
-    public AdminVo selectAdminVoByAid(Long aid);
+
 
 }
